@@ -1,0 +1,71 @@
+name: smoke
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Verify zero runtime dependencies
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json present — this repo is dependency-free by design"
+            node -e "const p=require('./package.json'); const d=Object.keys(p.dependencies||{}); if(d.length){console.error('unexpected dependencies: '+d.join(', ')); process.exit(1)}"
+          fi
+          echo "no install step required"
+
+      - name: Smoke test every tool (--help must exit 0)
+        run: node smoke.js
+
+      - name: Verify the README catalogue is up to date
+        run: |
+          cp README.md /tmp/README.before
+          node index-tools.js
+          if ! diff -q /tmp/README.before README.md > /dev/null; then
+            echo "::error::README catalogue is stale — run 'node index-tools.js' and commit the result"
+            diff -u /tmp/README.before README.md | head -60
+            exit 1
+          fi
+          echo "catalogue is current"
+
+      - name: Verify every tool declares metadata
+        run: |
+          missing=0
+          for f in tools/*.js; do
+            for tag in '@tool' '@desc' '@usage' '@tags'; do
+              if ! grep -q "^// *$tag " "$f"; then
+                echo "::error file=$f::missing $tag header"
+                missing=1
+              fi
+            done
+          done
+          if [ "$missing" -ne 0 ]; then exit 1; fi
+          echo "all tools declare @tool @desc @usage @tags"
+
+      - name: Check for shadowed globals (process/console/fetch/URL/Buffer)
+        run: |
+          bad=0
+          for f in tools/*.js; do
+            if grep -nE '^\s*(async\s+)?function\s+(process|console|fetch|URL|Buffer)\s*\(' "$f"; then
+              echo "::error file=$f::function shadows a global — rename it"
+              bad=1
+            fi
+          done
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+          echo "no shadowed globals"

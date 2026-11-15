@@ -1,5 +1,16 @@
 [
   {
+    "link": "tools/apidoc.js",
+    "name": "apidoc",
+    "desc": "Fetch a JSON endpoint, infer the response shape, and emit markdown documentation with types, nesting, nullability and example values",
+    "usage": "node tools/apidoc.js https://api.example.com/v1/items --title Items",
+    "tags": [
+      "api",
+      "docs",
+      "json"
+    ]
+  },
+  {
     "link": "tools/apiprobe.js",
     "name": "apiprobe",
     "desc": "Fingerprint a JSON API: allowed methods, content types, pagination style, auth scheme, rate headers",
@@ -8,6 +19,39 @@
       "web",
       "api",
       "recon"
+    ]
+  },
+  {
+    "link": "tools/bingindex.js",
+    "name": "bingindex",
+    "desc": "Probe whether a URL or site: operator appears indexed on several engines using their public HTML endpoints, and report which returned results with a snippet",
+    "usage": "node tools/bingindex.js https://example.com --engines bing,ddg",
+    "tags": [
+      "web",
+      "seo",
+      "indexing"
+    ]
+  },
+  {
+    "link": "tools/cacheheader.js",
+    "name": "cacheheader",
+    "desc": "Check Cache-Control, Expires, ETag, Last-Modified and Vary on each URL and flag conflicts, missing validators and no-store on static assets",
+    "usage": "node tools/cacheheader.js urls.txt --max-age-min 3600",
+    "tags": [
+      "web",
+      "performance",
+      "http"
+    ]
+  },
+  {
+    "link": "tools/canoncheck.js",
+    "name": "canoncheck",
+    "desc": "Audit rel=canonical across a page set: missing or non-self canonicals, cross-domain targets, canonical chains and duplicate clusters",
+    "usage": "node tools/canoncheck.js https://example.com --max 12",
+    "tags": [
+      "web",
+      "seo",
+      "audit"
     ]
   },
   {
@@ -22,6 +66,28 @@
     ]
   },
   {
+    "link": "tools/codeblock.js",
+    "name": "codeblock",
+    "desc": "Pull every <pre><code> (and standalone <pre>) block out of a page, detect the language from class names, and print them as markdown fences",
+    "usage": "node tools/codeblock.js https://example.com/post --lang js",
+    "tags": [
+      "web",
+      "scrape",
+      "markdown"
+    ]
+  },
+  {
+    "link": "tools/contractcheck.js",
+    "name": "contractcheck",
+    "desc": "Validate a live or on-disk JSON document against a JSON Schema and report every violation with its exact JSON path and the rule that failed",
+    "usage": "node tools/contractcheck.js https://api.example.com/items item.schema.json",
+    "tags": [
+      "api",
+      "json",
+      "validation"
+    ]
+  },
+  {
     "link": "tools/cookiejar.js",
     "name": "cookiejar",
     "desc": "Turn Set-Cookie headers (or a live fetch) into a cookie jar with flag explanations and Netscape export",
@@ -30,6 +96,28 @@
       "web",
       "http",
       "cookies"
+    ]
+  },
+  {
+    "link": "tools/corsmatrix.js",
+    "name": "corsmatrix",
+    "desc": "Probe CORS behaviour for a list of origins against a list of endpoints, record the allow-origin/credentials/vary response per cell, and flag the dangerous combinations",
+    "usage": "node tools/corsmatrix.js https://api.example.com --origins origins.txt --paths paths.txt",
+    "tags": [
+      "web",
+      "security",
+      "cors"
+    ]
+  },
+  {
+    "link": "tools/csspeek.js",
+    "name": "csspeek",
+    "desc": "Score every CSS rule for specificity and complexity, flag duplicate declaration blocks and selectors no class/id on the page uses, and inventory @media/@supports blocks",
+    "usage": "node tools/csspeek.js https://example.com --html https://example.com",
+    "tags": [
+      "web",
+      "css",
+      "audit"
     ]
   },
   {
@@ -44,6 +132,17 @@
     ]
   },
   {
+    "link": "tools/domquery.js",
+    "name": "domquery",
+    "desc": "Query HTML with tag/class/id/attribute selectors plus descendant, child and sibling combinators, printing each match with its text and attributes",
+    "usage": "node tools/domquery.js page.html \"article.card > h2.title\"",
+    "tags": [
+      "web",
+      "dom",
+      "cli"
+    ]
+  },
+  {
     "link": "tools/embedparse.js",
     "name": "embedparse",
     "desc": "Turn a media URL (YouTube/Vimeo/Twitter/Spotify/...) into provider, id and ready-to-paste embed HTML",
@@ -55,6 +154,17 @@
     ]
   },
   {
+    "link": "tools/feeddiff.js",
+    "name": "feeddiff",
+    "desc": "Compare two RSS/Atom/JSON feed snapshots by item identity and list new, removed and edited entries with the exact fields that changed",
+    "usage": "node tools/feeddiff.js feed-yesterday.xml feed-today.xml",
+    "tags": [
+      "web",
+      "feeds",
+      "diff"
+    ]
+  },
+  {
     "link": "tools/feedmerge.js",
     "name": "feedmerge",
     "desc": "Merge many RSS/Atom/JSON feeds into one deduplicated timeline sorted by date",
@@ -63,6 +173,17 @@
       "web",
       "scrape",
       "rss"
+    ]
+  },
+  {
+    "link": "tools/formfiller.js",
+    "name": "formfiller",
+    "desc": "Read every <form> on a page, synthesise plausible values per input type, and print the ready-to-send request (curl, body, multipart)",
+    "usage": "node tools/formfiller.js https://example.com/contact --form 0",
+    "tags": [
+      "web",
+      "forms",
+      "testing"
     ]
   },
   {
@@ -81,6 +202,17 @@
     "name": "hreflang",
     "desc": "Audit hreflang, canonical and alternate link tags for consistency, reciprocity and validity",
     "usage": "node tools/hreflang.js https://example.com --json",
+    "tags": [
+      "web",
+      "seo",
+      "i18n"
+    ]
+  },
+  {
+    "link": "tools/hreflanggraph.js",
+    "name": "hreflanggraph",
+    "desc": "Collect alternate hreflang annotations across a page set, group them into language clusters and flag missing return links, bad codes and self-reference errors",
+    "usage": "node tools/hreflanggraph.js https://example.com --max 10",
     "tags": [
       "web",
       "seo",
@@ -110,6 +242,17 @@
     ]
   },
   {
+    "link": "tools/httpmirror.js",
+    "name": "httpmirror",
+    "desc": "Crawl a URL list into a single JSON archive holding request and response records (status, headers, base64 body) plus an offline replay command",
+    "usage": "node tools/httpmirror.js urls.txt --out mirror.json --max 10",
+    "tags": [
+      "web",
+      "archive",
+      "http"
+    ]
+  },
+  {
     "link": "tools/httpstatus.js",
     "name": "httpstatus",
     "desc": "Look up any HTTP status code (1xx-5xx plus unofficial ones) with meaning, cause and fix hints",
@@ -118,6 +261,17 @@
       "web",
       "http",
       "reference"
+    ]
+  },
+  {
+    "link": "tools/jsonfeed.js",
+    "name": "jsonfeed",
+    "desc": "Detect the feed format, normalise every entry into one schema, and emit it as JSON with per-format field coverage notes",
+    "usage": "node tools/jsonfeed.js https://example.com/feed.xml --limit 10",
+    "tags": [
+      "web",
+      "feeds",
+      "data"
     ]
   },
   {
@@ -143,6 +297,17 @@
     ]
   },
   {
+    "link": "tools/keyworddensity.js",
+    "name": "keyworddensity",
+    "desc": "Count 1-, 2- and 3-grams in the readable text with stopwords removed, weight terms found in headings, and score them by TF-IDF against a second reference page",
+    "usage": "node tools/keyworddensity.js https://example.com/post --ref https://example.com/",
+    "tags": [
+      "web",
+      "seo",
+      "text"
+    ]
+  },
+  {
     "link": "tools/linkcheck.js",
     "name": "linkcheck",
     "desc": "Extract every link on a page and report HTTP status, redirect target and dead links",
@@ -151,6 +316,17 @@
       "web",
       "seo",
       "qa"
+    ]
+  },
+  {
+    "link": "tools/markdownify.js",
+    "name": "markdownify",
+    "desc": "Hand-written HTML to markdown converter covering headings, emphasis, links, images, lists, tables, code fences, blockquotes and horizontal rules",
+    "usage": "node tools/markdownify.js https://example.com/post --drop-nav",
+    "tags": [
+      "web",
+      "markdown",
+      "convert"
     ]
   },
   {
@@ -176,6 +352,17 @@
     ]
   },
   {
+    "link": "tools/microdata.js",
+    "name": "microdata",
+    "desc": "Parse itemscope/itemprop microdata and RDFa vocab/property/typeof attributes into a nested item tree keyed by schema.org type",
+    "usage": "node tools/microdata.js https://example.com/product",
+    "tags": [
+      "web",
+      "seo",
+      "structured-data"
+    ]
+  },
+  {
     "link": "tools/mimeprint.js",
     "name": "mimeprint",
     "desc": "Map file extensions to MIME types (and back) with the correct Content-Type header to send",
@@ -187,6 +374,17 @@
     ]
   },
   {
+    "link": "tools/mockjson.js",
+    "name": "mockjson",
+    "desc": "Learn the shape of a sample JSON payload and emit a seeded generator script plus ready-generated mock records with realistic value substitution per field name",
+    "usage": "node tools/mockjson.js sample.json --count 5 --seed 42",
+    "tags": [
+      "api",
+      "mock",
+      "json"
+    ]
+  },
+  {
     "link": "tools/musicsearch.js",
     "name": "musicsearch",
     "desc": "Query the iTunes Search API and MusicBrainz for tracks, artists and albums; rate-limited and cached",
@@ -195,6 +393,39 @@
       "web",
       "api",
       "music"
+    ]
+  },
+  {
+    "link": "tools/opengraph.js",
+    "name": "opengraph",
+    "desc": "Check every og: and twitter: tag against what each platform needs, then render the text preview card that would be shown when the link is shared",
+    "usage": "node tools/opengraph.js https://example.com",
+    "tags": [
+      "web",
+      "seo",
+      "social"
+    ]
+  },
+  {
+    "link": "tools/pagerankish.js",
+    "name": "pagerankish",
+    "desc": "Crawl a handful of same-host pages, build the internal link graph, and rank every page by in-degree plus a damped PageRank iteration",
+    "usage": "node tools/pagerankish.js https://example.com --max 12",
+    "tags": [
+      "web",
+      "seo",
+      "crawl"
+    ]
+  },
+  {
+    "link": "tools/pagestruct.js",
+    "name": "pagestruct",
+    "desc": "Print the h1-h6 outline with level skips flagged, count multiple h1s, and report missing or repeated nav/main/aside/footer landmarks",
+    "usage": "node tools/pagestruct.js https://example.com",
+    "tags": [
+      "web",
+      "seo",
+      "a11y"
     ]
   },
   {
@@ -231,6 +462,17 @@
     ]
   },
   {
+    "link": "tools/readtime.js",
+    "name": "readtime",
+    "desc": "Estimate reading and speaking time, a Flesch-style difficulty score, and how much of the page is prose versus code, tables and lists",
+    "usage": "node tools/readtime.js https://example.com/post",
+    "tags": [
+      "web",
+      "text",
+      "content"
+    ]
+  },
+  {
     "link": "tools/redirectchain.js",
     "name": "redirectchain",
     "desc": "Walk a redirect chain hop by hop and report status, Location, timing and the loop/limit verdict",
@@ -253,6 +495,17 @@
     ]
   },
   {
+    "link": "tools/robotsdiff.js",
+    "name": "robotsdiff",
+    "desc": "Compare two robots.txt files rule by rule per user-agent and state exactly which paths became blocked, unblocked, or changed crawl-delay",
+    "usage": "node tools/robotsdiff.js https://example.com/robots.txt old-robots.txt",
+    "tags": [
+      "web",
+      "seo",
+      "diff"
+    ]
+  },
+  {
     "link": "tools/rssgrab.js",
     "name": "rssgrab",
     "desc": "Fetch RSS, Atom or JSON feeds and normalize every entry to title/link/date/summary",
@@ -261,6 +514,17 @@
       "web",
       "scrape",
       "rss"
+    ]
+  },
+  {
+    "link": "tools/schemagen.js",
+    "name": "schemagen",
+    "desc": "Merge one or more JSON samples into a draft-07 schema with required-field detection, enum inference for repeating literals and format hints for dates, emails and URLs",
+    "usage": "node tools/schemagen.js sample.json second-sample.json --title Item",
+    "tags": [
+      "api",
+      "json",
+      "schema"
     ]
   },
   {
@@ -275,6 +539,17 @@
     ]
   },
   {
+    "link": "tools/searchurl.js",
+    "name": "searchurl",
+    "desc": "Compose properly percent-encoded search URLs for Google, Bing, DuckDuckGo, Startpage, Brave and Yandex from operator combinations, with a shell-safe copy line",
+    "usage": "node tools/searchurl.js site:example.com filetype:pdf --engine google,ddg",
+    "tags": [
+      "web",
+      "seo",
+      "cli"
+    ]
+  },
+  {
     "link": "tools/seohead.js",
     "name": "seohead",
     "desc": "Audit title/description/canonical/robots/OG/structured-data in one report with length and duplicate checks",
@@ -283,6 +558,17 @@
       "web",
       "seo",
       "audit"
+    ]
+  },
+  {
+    "link": "tools/sitemapdiff.js",
+    "name": "sitemapdiff",
+    "desc": "Compare two sitemaps and report URLs added, removed, lastmod-changed, priority-changed, plus which new URLs look like they should be polled for indexing first",
+    "usage": "node tools/sitemapdiff.js sitemap-old.xml https://example.com/sitemap.xml",
+    "tags": [
+      "web",
+      "seo",
+      "diff"
     ]
   },
   {
@@ -297,6 +583,17 @@
     ]
   },
   {
+    "link": "tools/sitemapvalidate.js",
+    "name": "sitemapvalidate",
+    "desc": "Check URL and sitemap-index files for spec violations: bad lastmod format, out-of-range priority or changefreq values, non-absolute locs, size and count limits, and gzip handling",
+    "usage": "node tools/sitemapvalidate.js https://example.com/sitemap.xml",
+    "tags": [
+      "web",
+      "seo",
+      "validation"
+    ]
+  },
+  {
     "link": "tools/sitestatus.js",
     "name": "sitestatus",
     "desc": "Query Statuspage / Instatus / Google Cloud status APIs and summarise which services are degraded",
@@ -305,6 +602,17 @@
       "web",
       "status",
       "ops"
+    ]
+  },
+  {
+    "link": "tools/tabletext.js",
+    "name": "tabletext",
+    "desc": "Turn any HTML table into a monospaced grid with computed column widths, honouring rowspan and colspan and wrapping cells that are too wide",
+    "usage": "node tools/tabletext.js https://example.com/pricing --index 0 --max-width 30",
+    "tags": [
+      "web",
+      "scrape",
+      "text"
     ]
   },
   {
@@ -338,6 +646,28 @@
       "web",
       "parse",
       "url"
+    ]
+  },
+  {
+    "link": "tools/warcbuild.js",
+    "name": "warcbuild",
+    "desc": "Crawl URLs and write a hand-assembled WARC 1.1 file with warcinfo, request and response records using correct CRLF line endings and Content-Length blocks",
+    "usage": "node tools/warcbuild.js urls.txt --out crawl.warc --max 5",
+    "tags": [
+      "web",
+      "archive",
+      "warc"
+    ]
+  },
+  {
+    "link": "tools/webfont.js",
+    "name": "webfont",
+    "desc": "Inventory every @font-face and font load on a page, classify the loading strategy (local, preload, display swap, self-hosted vs third-party) and estimate FOUT/FOIT risk",
+    "usage": "node tools/webfont.js https://example.com --link",
+    "tags": [
+      "web",
+      "fonts",
+      "performance"
     ]
   }
 ]
