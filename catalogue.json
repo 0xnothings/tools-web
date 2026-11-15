@@ -1,0 +1,343 @@
+[
+  {
+    "link": "tools/apiprobe.js",
+    "name": "apiprobe",
+    "desc": "Fingerprint a JSON API: allowed methods, content types, pagination style, auth scheme, rate headers",
+    "usage": "node tools/apiprobe.js https://api.github.com/users/octocat --json",
+    "tags": [
+      "web",
+      "api",
+      "recon"
+    ]
+  },
+  {
+    "link": "tools/changelog.js",
+    "name": "changelog",
+    "desc": "Summarize releases from the GitHub Releases API, a CHANGELOG.md or a releases HTML page",
+    "usage": "node tools/changelog.js https://github.com/nodejs/node --limit 5 --json",
+    "tags": [
+      "web",
+      "scrape",
+      "releases"
+    ]
+  },
+  {
+    "link": "tools/cookiejar.js",
+    "name": "cookiejar",
+    "desc": "Turn Set-Cookie headers (or a live fetch) into a cookie jar with flag explanations and Netscape export",
+    "usage": "node tools/cookiejar.js https://example.com --json",
+    "tags": [
+      "web",
+      "http",
+      "cookies"
+    ]
+  },
+  {
+    "link": "tools/dnsforurl.js",
+    "name": "dnsforurl",
+    "desc": "Resolve a URL host over DNS (A/AAAA/CNAME/NS/MX/TXT) and infer the CDN or hosting provider",
+    "usage": "node tools/dnsforurl.js https://example.com --json",
+    "tags": [
+      "web",
+      "dns",
+      "recon"
+    ]
+  },
+  {
+    "link": "tools/embedparse.js",
+    "name": "embedparse",
+    "desc": "Turn a media URL (YouTube/Vimeo/Twitter/Spotify/...) into provider, id and ready-to-paste embed HTML",
+    "usage": "node tools/embedparse.js \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" --json",
+    "tags": [
+      "web",
+      "media",
+      "embed"
+    ]
+  },
+  {
+    "link": "tools/feedmerge.js",
+    "name": "feedmerge",
+    "desc": "Merge many RSS/Atom/JSON feeds into one deduplicated timeline sorted by date",
+    "usage": "node tools/feedmerge.js https://news.ycombinator.com/rss https://lobste.rs/rss --limit 20 --json",
+    "tags": [
+      "web",
+      "scrape",
+      "rss"
+    ]
+  },
+  {
+    "link": "tools/harfetch.js",
+    "name": "harfetch",
+    "desc": "Replay every request in a HAR capture and compare status, size and wall time against the recording",
+    "usage": "node tools/harfetch.js capture.har --filter api --limit 20 --json",
+    "tags": [
+      "web",
+      "http",
+      "perf"
+    ]
+  },
+  {
+    "link": "tools/hreflang.js",
+    "name": "hreflang",
+    "desc": "Audit hreflang, canonical and alternate link tags for consistency, reciprocity and validity",
+    "usage": "node tools/hreflang.js https://example.com --json",
+    "tags": [
+      "web",
+      "seo",
+      "i18n"
+    ]
+  },
+  {
+    "link": "tools/htmltable.js",
+    "name": "htmltable",
+    "desc": "Find every <table> on a page and emit its rows as JSON or CSV with proper rowspan/colspan handling",
+    "usage": "node tools/htmltable.js https://en.wikipedia.org/wiki/List_of_countries_by_population --index 0 --csv",
+    "tags": [
+      "web",
+      "scrape",
+      "data"
+    ]
+  },
+  {
+    "link": "tools/htmlvalid.js",
+    "name": "htmlvalid",
+    "desc": "Lint HTML for unclosed tags, duplicate ids, missing alt, inline handlers and other inline-fixable defects",
+    "usage": "node tools/htmlvalid.js https://example.com --json",
+    "tags": [
+      "web",
+      "qa",
+      "lint"
+    ]
+  },
+  {
+    "link": "tools/httpstatus.js",
+    "name": "httpstatus",
+    "desc": "Look up any HTTP status code (1xx-5xx plus unofficial ones) with meaning, cause and fix hints",
+    "usage": "node tools/httpstatus.js 429 --json",
+    "tags": [
+      "web",
+      "http",
+      "reference"
+    ]
+  },
+  {
+    "link": "tools/jsonld.js",
+    "name": "jsonld",
+    "desc": "Pull every JSON-LD block off a page, validate its shape and summarise the schema.org graph",
+    "usage": "node tools/jsonld.js https://example.com --json",
+    "tags": [
+      "web",
+      "seo",
+      "structured-data"
+    ]
+  },
+  {
+    "link": "tools/jsonquery.js",
+    "name": "jsonquery",
+    "desc": "Fetch (or read) JSON and run a jq-like path query with slicing, mapping and filtering",
+    "usage": "node tools/jsonquery.js https://api.github.com/users/octocat '.name, .id' --json",
+    "tags": [
+      "web",
+      "api",
+      "json"
+    ]
+  },
+  {
+    "link": "tools/linkcheck.js",
+    "name": "linkcheck",
+    "desc": "Extract every link on a page and report HTTP status, redirect target and dead links",
+    "usage": "node tools/linkcheck.js https://example.com --internal-only --json",
+    "tags": [
+      "web",
+      "seo",
+      "qa"
+    ]
+  },
+  {
+    "link": "tools/metaform.js",
+    "name": "metaform",
+    "desc": "Inventory every <form> on a page with its fields, hidden inputs, CSRF token and submit-target hints",
+    "usage": "node tools/metaform.js https://example.com/login --json",
+    "tags": [
+      "web",
+      "scrape",
+      "recon"
+    ]
+  },
+  {
+    "link": "tools/metalink.js",
+    "name": "metalink",
+    "desc": "Pull OpenGraph, Twitter-card, canonical and oEmbed metadata off any page into one object",
+    "usage": "node tools/metalink.js https://github.com --oembed --json",
+    "tags": [
+      "web",
+      "seo",
+      "scrape"
+    ]
+  },
+  {
+    "link": "tools/mimeprint.js",
+    "name": "mimeprint",
+    "desc": "Map file extensions to MIME types (and back) with the correct Content-Type header to send",
+    "usage": "node tools/mimeprint.js .webp svg .webmanifest --json",
+    "tags": [
+      "web",
+      "http",
+      "reference"
+    ]
+  },
+  {
+    "link": "tools/musicsearch.js",
+    "name": "musicsearch",
+    "desc": "Query the iTunes Search API and MusicBrainz for tracks, artists and albums; rate-limited and cached",
+    "usage": "node tools/musicsearch.js \"daft punk\" --type artist --limit 10 --json",
+    "tags": [
+      "web",
+      "api",
+      "music"
+    ]
+  },
+  {
+    "link": "tools/pageweight.js",
+    "name": "pageweight",
+    "desc": "Inventory every subresource a page loads, grouped by type, with sizes when the server reports them",
+    "usage": "node tools/pageweight.js https://example.com --head --json",
+    "tags": [
+      "web",
+      "perf",
+      "audit"
+    ]
+  },
+  {
+    "link": "tools/paginate.js",
+    "name": "paginate",
+    "desc": "Walk page/cursor/offset/link-header pagination on a JSON API and collect all records",
+    "usage": "node tools/paginate.js https://api.github.com/users/octocat/repos --style auto --max-pages 3 --json",
+    "tags": [
+      "web",
+      "api",
+      "json"
+    ]
+  },
+  {
+    "link": "tools/ratelim.js",
+    "name": "ratelim",
+    "desc": "Read an API's rate-limit headers and compute a safe request pacing / concurrency plan",
+    "usage": "node tools/ratelim.js https://api.github.com/users/octocat --burst 5 --json",
+    "tags": [
+      "web",
+      "api",
+      "recon"
+    ]
+  },
+  {
+    "link": "tools/redirectchain.js",
+    "name": "redirectchain",
+    "desc": "Walk a redirect chain hop by hop and report status, Location, timing and the loop/limit verdict",
+    "usage": "node tools/redirectchain.js http://github.com --max 10 --json",
+    "tags": [
+      "web",
+      "http",
+      "debug"
+    ]
+  },
+  {
+    "link": "tools/robbots.js",
+    "name": "robbots",
+    "desc": "Fetch and parse robots.txt, then evaluate paths against any user-agent with full precedence rules",
+    "usage": "node tools/robbots.js https://example.com --ua Googlebot --path /admin --json",
+    "tags": [
+      "web",
+      "seo",
+      "recon"
+    ]
+  },
+  {
+    "link": "tools/rssgrab.js",
+    "name": "rssgrab",
+    "desc": "Fetch RSS, Atom or JSON feeds and normalize every entry to title/link/date/summary",
+    "usage": "node tools/rssgrab.js https://news.ycombinator.com/rss --limit 10 --json",
+    "tags": [
+      "web",
+      "scrape",
+      "rss"
+    ]
+  },
+  {
+    "link": "tools/searchsuggest.js",
+    "name": "searchsuggest",
+    "desc": "Collect autocomplete suggestions from DuckDuckGo, Wikipedia, Google and Brave for keyword research",
+    "usage": "node tools/searchsuggest.js \"rust async\" --source ddg,wiki --expand --json",
+    "tags": [
+      "web",
+      "seo",
+      "research"
+    ]
+  },
+  {
+    "link": "tools/seohead.js",
+    "name": "seohead",
+    "desc": "Audit title/description/canonical/robots/OG/structured-data in one report with length and duplicate checks",
+    "usage": "node tools/seohead.js https://example.com --json",
+    "tags": [
+      "web",
+      "seo",
+      "audit"
+    ]
+  },
+  {
+    "link": "tools/sitemapgen.js",
+    "name": "sitemapgen",
+    "desc": "Breadth-first crawl of one origin and emit a valid sitemap.xml (or JSON url list)",
+    "usage": "node tools/sitemapgen.js https://example.com --depth 2 --max 100 --json",
+    "tags": [
+      "web",
+      "seo",
+      "crawler"
+    ]
+  },
+  {
+    "link": "tools/sitestatus.js",
+    "name": "sitestatus",
+    "desc": "Query Statuspage / Instatus / Google Cloud status APIs and summarise which services are degraded",
+    "usage": "node tools/sitestatus.js github cloudflare npm --json",
+    "tags": [
+      "web",
+      "status",
+      "ops"
+    ]
+  },
+  {
+    "link": "tools/textgrab.js",
+    "name": "textgrab",
+    "desc": "Strip scripts, nav and markup from an HTML page and return the readable article text",
+    "usage": "node tools/textgrab.js https://example.com --max 4000",
+    "tags": [
+      "web",
+      "scrape",
+      "text"
+    ]
+  },
+  {
+    "link": "tools/uacheck.js",
+    "name": "uacheck",
+    "desc": "Decode one or many User-Agent strings into browser, version, engine, OS, device class and bot flags",
+    "usage": "node tools/uacheck.js \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1\" --json",
+    "tags": [
+      "web",
+      "parse",
+      "qa"
+    ]
+  },
+  {
+    "link": "tools/urlx.js",
+    "name": "urlx",
+    "desc": "Parse, normalize, de-track, resolve and diff URLs with a query-string builder",
+    "usage": "node tools/urlx.js \"https://Example.COM/a/../b?utm_source=x&id=7#frag\" --clean --json",
+    "tags": [
+      "web",
+      "parse",
+      "url"
+    ]
+  }
+]
