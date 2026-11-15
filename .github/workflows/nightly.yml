@@ -1,0 +1,97 @@
+name: nightly-tools
+
+# Nightly regression pass with a rotating spotlight.
+#
+# Every night the full suite runs, and one tool (chosen by day-of-year, cycling
+# through the whole directory) gets its behaviour recorded into a dated log
+# entry. The commit only lands when the full suite passed, so this cannot
+# manufacture a false green.
+
+on:
+  schedule:
+    - cron: '43 3 * * *'      # 03:43 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Pick today's tool
+        id: pick
+        run: |
+          mapfile -t files < <(ls tools/*.js | sort)
+          n=${#files[@]}
+          day=$(( 10#$(date -u +%j) ))
+          idx=$(( day % n ))
+          tool="${files[$idx]}"
+          name="$(basename "$tool" .js)"
+          echo "tool=$tool" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "picked $name (index $idx of $n)"
+
+      - name: Run the selected tool for real
+        id: run
+        continue-on-error: true
+        run: |
+          set +e
+          out="$(timeout 60 node "${{ steps.pick.outputs.tool }}" --help 2>&1)"
+          rc=$?
+          set -e
+          echo "exit=$rc"
+          echo "$out" | head -20
+          echo "---"
+          {
+            echo "### ${{ steps.pick.outputs.name }}"
+            echo '```'
+            echo "$out" | head -30
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Full regression pass
+        run: node smoke.js
+
+      - name: Record the run
+        run: |
+          mkdir -p activity/live
+          day="$(date -u +%Y-%m-%d)"
+          file="activity/live/${day}.md"
+          {
+            echo "# ${day} — live check"
+            echo
+            echo "- tool: \`${{ steps.pick.outputs.name }}\`"
+            echo "- all tools still smoke-clean: yes"
+            echo "- node: $(node -v)"
+            echo
+            echo '```'
+            node "${{ steps.pick.outputs.tool }}" --help 2>&1 | head -14
+            echo '```'
+            echo
+          } > "$file"
+          cat "$file"
+
+      - name: Commit
+        run: |
+          git config user.name  "0xnothings"
+          git config user.email "0xnothings@users.noreply.github.com"
+          git add activity/live
+          if git diff --staged --quiet; then
+            echo "nothing new to record"
+            exit 0
+          fi
+          git commit -m "chore(live): $(date -u +%Y-%m-%d) — ${{ steps.pick.outputs.name }} exercised, full suite clean"
+          git push

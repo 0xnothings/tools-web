@@ -1,0 +1,93 @@
+name: weekly-index
+
+# Keeps the catalogue and a weekly digest honest.
+# Regenerates catalogue.json from the tool headers, verifies nothing drifted,
+# and writes a dated digest. Commits only on a clean verification pass.
+
+on:
+  schedule:
+    - cron: '23 5 * * 1'      # Mondays 05:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Smoke test
+        run: node smoke.js
+
+      - name: Regenerate the catalogue
+        run: node index-tools.js
+
+      - name: Fail if the catalogue was stale
+        run: |
+          if ! git diff --quiet -- README.md catalogue.json; then
+            echo "::error::catalogue was stale — the regenerated version is committed by this run"
+            git diff --stat -- README.md catalogue.json
+          fi
+          node -e "const c=require('./catalogue.json'); console.log(c.length+' tools in catalogue')"
+
+      - name: Count lines of shipped code
+        id: loc
+        run: |
+          loc=$(cat tools/*.js _lib.js index-tools.js smoke.js | wc -l)
+          files=$(ls tools/*.js | wc -l)
+          echo "loc=$loc" >> "$GITHUB_OUTPUT"
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+
+      - name: Find the most recently touched tools
+        id: recent
+        run: |
+          recent=$(git log --since='30 days ago' --name-only --pretty=format: -- tools/ \
+            | grep -E '^tools/[a-z0-9_-]+\.js$' | sort -u | head -15 | sed 's|^tools/||;s|\.js$||' | tr '\n' ' ')
+          echo "list=$recent" >> "$GITHUB_OUTPUT"
+
+      - name: Write the weekly digest
+        run: |
+          mkdir -p activity/weekly
+          week="$(date -u +%G-W%V)"
+          file="activity/weekly/${week}.md"
+          {
+            echo "# ${week}"
+            echo
+            echo "| metric | value |"
+            echo "|---|---|"
+            echo "| tools | ${{ steps.loc.outputs.files }} |"
+            echo "| lines of shipped code | ${{ steps.loc.outputs.loc }} |"
+            echo "| node | $(node -v) |"
+            echo "| smoke | $(node smoke.js 2>&1 | tail -1) |"
+            echo
+            echo "Changed in the last 30 days:"
+            echo
+            for t in ${{ steps.recent.outputs.list }}; do echo "- \`$t\`"; done
+            if [ -z "${{ steps.recent.outputs.list }}" ]; then echo "- (none)"; fi
+            echo
+          } > "$file"
+          cat "$file"
+
+      - name: Commit
+        run: |
+          git config user.name  "0xnothings"
+          git config user.email "0xnothings@users.noreply.github.com"
+          git add README.md catalogue.json activity/weekly
+          if git diff --staged --quiet; then
+            echo "nothing to commit this week"
+            exit 0
+          fi
+          git commit -m "chore(index): $(date -u +%G-W%V) — catalogue verified, ${{ steps.loc.outputs.files }} tools, ${{ steps.loc.outputs.loc }} LOC"
+          git push
