@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // linkcheck.js — check every link found on a page for dead targets.
 // Copyright (c) 2026 0xnothings
 // @tool linkcheck

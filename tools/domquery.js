@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // domquery.js — CSS-selector query over HTML text with a hand-written matcher.
 // Copyright (c) 2026 0xnothings
 // @tool domquery

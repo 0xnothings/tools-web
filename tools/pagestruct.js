@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // pagestruct.js — heading outline and landmark structure audit.
 // Copyright (c) 2026 0xnothings
 // @tool pagestruct

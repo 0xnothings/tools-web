@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // httpmirror.js — local request/response archive, replayable offline.
 // Copyright (c) 2026 0xnothings
 // @tool httpmirror

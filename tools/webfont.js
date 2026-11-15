@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // webfont.js — detect web fonts, loading strategy and FOUT/FOIT risk.
 // Copyright (c) 2026 0xnothings
 // @tool webfont

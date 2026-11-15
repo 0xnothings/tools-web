@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // warcbuild.js — write a minimal valid WARC 1.1 file from a crawl.
 // Copyright (c) 2026 0xnothings
 // @tool warcbuild

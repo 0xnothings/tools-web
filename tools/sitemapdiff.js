@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // sitemapdiff.js — diff two sitemap.xml files.
 // Copyright (c) 2026 0xnothings
 // @tool sitemapdiff

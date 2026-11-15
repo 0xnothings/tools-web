@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // corsmatrix.js — origin x endpoint CORS result matrix.
 // Copyright (c) 2026 0xnothings
 // @tool corsmatrix

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // searchurl.js — build correctly-formed search engine query URLs.
 // Copyright (c) 2026 0xnothings
 // @tool searchurl

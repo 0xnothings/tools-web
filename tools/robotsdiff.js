@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // robotsdiff.js — diff two robots.txt versions and explain the crawl impact.
 // Copyright (c) 2026 0xnothings
 // @tool robotsdiff

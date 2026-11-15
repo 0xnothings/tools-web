@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // bingindex.js — keyless index-presence probe across search engines.
 // Copyright (c) 2026 0xnothings
 // @tool bingindex

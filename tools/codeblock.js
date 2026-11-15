@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // codeblock.js — extract code blocks with language detection.
 // Copyright (c) 2026 0xnothings
 // @tool codeblock

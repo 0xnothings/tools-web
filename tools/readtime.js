@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // readtime.js — reading time, difficulty and content-per-code ratio.
 // Copyright (c) 2026 0xnothings
 // @tool readtime

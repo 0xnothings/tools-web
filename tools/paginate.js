@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // paginate.js — follow API pagination and collect every item into one array.
 // Copyright (c) 2026 0xnothings
 // @tool paginate

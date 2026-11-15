@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // opengraph.js — OpenGraph and Twitter Card completeness validator.
 // Copyright (c) 2026 0xnothings
 // @tool opengraph

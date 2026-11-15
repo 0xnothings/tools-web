@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // mimeprint.js — file extension to MIME type and back.
 // Copyright (c) 2026 0xnothings
 // @tool mimeprint

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // rssgrab.js — fetch RSS/Atom/JSON feeds and normalize items to JSON.
 // Copyright (c) 2026 0xnothings
 // @tool rssgrab

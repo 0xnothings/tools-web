@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // cookiejar.js — parse Set-Cookie headers into a jar, export Netscape format, explain flags.
 // Copyright (c) 2026 0xnothings
 // @tool cookiejar

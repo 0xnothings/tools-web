@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // cacheheader.js — audit caching headers across a URL list.
 // Copyright (c) 2026 0xnothings
 // @tool cacheheader

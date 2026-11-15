@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // ratelim.js — detect rate limit headers and compute a safe pacing plan.
 // Copyright (c) 2026 0xnothings
 // @tool ratelim

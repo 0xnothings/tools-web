@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // seohead.js — audit a page's <head>.
 // Copyright (c) 2026 0xnothings
 // @tool seohead

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // htmlvalid.js — heuristic HTML lint.
 // Copyright (c) 2026 0xnothings
 // @tool htmlvalid

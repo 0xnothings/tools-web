@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // changelog.js — scrape a releases/changelog page and summarize versions.
 // Copyright (c) 2026 0xnothings
 // @tool changelog

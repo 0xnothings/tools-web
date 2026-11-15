@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // pagerankish.js — internal link graph + PageRank approximation from a small crawl.
 // Copyright (c) 2026 0xnothings
 // @tool pagerankish

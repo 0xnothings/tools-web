@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // hreflanggraph.js — build an hreflang cluster map and report reciprocity gaps.
 // Copyright (c) 2026 0xnothings
 // @tool hreflanggraph

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // textgrab.js — fetch a page and extract readable text.
 // Copyright (c) 2026 0xnothings
 // @tool textgrab

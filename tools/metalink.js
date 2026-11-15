@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // metalink.js — extract OpenGraph / Twitter-card / oEmbed metadata from a URL.
 // Copyright (c) 2026 0xnothings
 // @tool metalink

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // httpstatus.js — explain any HTTP status code.
 // Copyright (c) 2026 0xnothings
 // @tool httpstatus

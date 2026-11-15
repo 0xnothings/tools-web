@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // jsonquery.js — fetch JSON and query it with a jq-like path expression.
 // Copyright (c) 2026 0xnothings
 // @tool jsonquery

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // jsonld.js — extract and validate schema.org JSON-LD blocks from a page.
 // Copyright (c) 2026 0xnothings
 // @tool jsonld

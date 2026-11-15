@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // redirectchain.js — follow and print every hop of a redirect chain with timing.
 // Copyright (c) 2026 0xnothings
 // @tool redirectchain

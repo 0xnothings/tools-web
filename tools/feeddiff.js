@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // feeddiff.js — diff two feed snapshots and report what changed.
 // Copyright (c) 2026 0xnothings
 // @tool feeddiff

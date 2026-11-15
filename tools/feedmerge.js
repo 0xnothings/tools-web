@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // feedmerge.js — merge multiple RSS/JSON feeds, dedupe, sort by date.
 // Copyright (c) 2026 0xnothings
 // @tool feedmerge

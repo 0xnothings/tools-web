@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // apiprobe.js — probe a JSON API endpoint: method matrix, pagination, auth hints.
 // Copyright (c) 2026 0xnothings
 // @tool apiprobe

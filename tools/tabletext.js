@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // tabletext.js — render an HTML table as an aligned plain-text grid.
 // Copyright (c) 2026 0xnothings
 // @tool tabletext

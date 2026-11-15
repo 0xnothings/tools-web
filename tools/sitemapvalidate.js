@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // sitemapvalidate.js — validate sitemap.xml and sitemap index files against the spec.
 // Copyright (c) 2026 0xnothings
 // @tool sitemapvalidate

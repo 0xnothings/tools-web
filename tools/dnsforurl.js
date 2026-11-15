@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // dnsforurl.js — resolve a URL's host through DNS and report CDN/hosting hints.
 // Copyright (c) 2026 0xnothings
 // @tool dnsforurl

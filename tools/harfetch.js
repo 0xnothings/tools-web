@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // harfetch.js — replay a .har file's requests and report status/wall-time differences.
 // Copyright (c) 2026 0xnothings
 // @tool harfetch

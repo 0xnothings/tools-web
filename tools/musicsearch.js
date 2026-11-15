@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // musicsearch.js — search public music metadata without an account.
 // Copyright (c) 2026 0xnothings
 // @tool musicsearch

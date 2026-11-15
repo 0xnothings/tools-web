@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // urlx.js — URL toolkit: parse, normalize, strip tracking, resolve, compare, build.
 // Copyright (c) 2026 0xnothings
 // @tool urlx

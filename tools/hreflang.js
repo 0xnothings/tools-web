@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // hreflang.js — find hreflang/canonical/alternate tags and report SEO consistency.
 // Copyright (c) 2026 0xnothings
 // @tool hreflang

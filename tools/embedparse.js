@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // embedparse.js — parse an embed/oEmbed URL into id + canonical embed HTML.
 // Copyright (c) 2026 0xnothings
 // @tool embedparse

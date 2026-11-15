@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // canoncheck.js — canonical URL consistency audit across pages.
 // Copyright (c) 2026 0xnothings
 // @tool canoncheck

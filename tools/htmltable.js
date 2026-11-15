@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // htmltable.js — extract HTML tables into CSV/JSON.
 // Copyright (c) 2026 0xnothings
 // @tool htmltable

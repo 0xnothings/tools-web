@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // sitestatus.js — check status-page APIs (statuspage.io) for a list of companies.
 // Copyright (c) 2026 0xnothings
 // @tool sitestatus

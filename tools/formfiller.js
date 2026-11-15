@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // formfiller.js — generate a filled submission from a page's form definition.
 // Copyright (c) 2026 0xnothings
 // @tool formfiller

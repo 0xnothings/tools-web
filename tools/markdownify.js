@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // markdownify.js — convert HTML to clean markdown.
 // Copyright (c) 2026 0xnothings
 // @tool markdownify

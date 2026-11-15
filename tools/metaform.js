@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // metaform.js — list forms on a page: action, method, fields, hidden inputs, CSRF token.
 // Copyright (c) 2026 0xnothings
 // @tool metaform

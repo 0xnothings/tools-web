@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // jsonfeed.js — unified RSS / Atom / JSON Feed reader.
 // Copyright (c) 2026 0xnothings
 // @tool jsonfeed

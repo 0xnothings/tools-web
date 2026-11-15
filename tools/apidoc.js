@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // apidoc.js — generate markdown API docs from a live JSON response sample.
 // Copyright (c) 2026 0xnothings
 // @tool apidoc

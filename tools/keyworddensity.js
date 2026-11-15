@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // keyworddensity.js — n-gram and TF-IDF analysis of a page's visible text.
 // Copyright (c) 2026 0xnothings
 // @tool keyworddensity

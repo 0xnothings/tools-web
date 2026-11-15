@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // schemagen.js — infer a JSON Schema (draft-07 subset) from sample JSON.
 // Copyright (c) 2026 0xnothings
 // @tool schemagen

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // robbots.js — parse robots.txt and test whether paths are allowed for a user-agent.
 // Copyright (c) 2026 0xnothings
 // @tool robbots

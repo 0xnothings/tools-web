@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // uacheck.js — parse a User-Agent string into browser/os/engine/device.
 // Copyright (c) 2026 0xnothings
 // @tool uacheck

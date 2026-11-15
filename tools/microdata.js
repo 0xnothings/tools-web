@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // microdata.js — extract microdata and RDFa items into normalised JSON.
 // Copyright (c) 2026 0xnothings
 // @tool microdata

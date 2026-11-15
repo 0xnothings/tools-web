@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // searchsuggest.js — query public search-suggest endpoints for keyword research.
 // Copyright (c) 2026 0xnothings
 // @tool searchsuggest

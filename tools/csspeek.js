@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // csspeek.js — CSS analyzer: specificity, duplicates, media inventory.
 // Copyright (c) 2026 0xnothings
 // @tool csspeek

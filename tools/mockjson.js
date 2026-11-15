@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // mockjson.js — infer a deterministic mock-JSON generator from a sample payload.
 // Copyright (c) 2026 0xnothings
 // @tool mockjson

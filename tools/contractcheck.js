@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // contractcheck.js — validate a JSON response against a JSON Schema file.
 // Copyright (c) 2026 0xnothings
 // @tool contractcheck

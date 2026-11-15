@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // pageweight.js — measure a page's transfer breakdown by resource type.
 // Copyright (c) 2026 0xnothings
 // @tool pageweight

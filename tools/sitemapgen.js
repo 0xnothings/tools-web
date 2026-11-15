@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // sitemapgen.js — crawl a site shallowly and emit sitemap.xml.
 // Copyright (c) 2026 0xnothings
 // @tool sitemapgen
