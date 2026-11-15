@@ -2,6 +2,8 @@
 
 Zero-dependency Node.js tools for the web: scraping, feeds, API pagination, metadata extraction, and page analysis. Everything runs on the Node standard library — no `npm install`, no headless browser, no framework.
 
+**[Landing page](https://0xnothings.github.io) · [All four repos](https://github.com/0xnothings)**
+
 ```bash
 node tools/rssgrab.js https://news.ycombinator.com/rss --limit 5
 node tools/metalink.js https://github.com/0xnothings
