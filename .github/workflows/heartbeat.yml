@@ -1,0 +1,143 @@
+name: heartbeat
+
+# Keeps a daily record in this repo without inventing work.
+#
+# Two things this has to survive, which the previous version did not handle:
+#
+#  1. GitHub disables a scheduled workflow after 60 days of repository
+#     inactivity. The workflow is then silently `disabled_inactivity` and the
+#     green squares stop with no error. This one pushes on every run, so the
+#     repository is never inactive.
+#
+#  2. A scheduled run can be delayed or skipped under load, and a failed run
+#     must not be recorded as a success. The record is written only after the
+#     full test suite passes, and the file content is the actual result.
+#
+# What it does each run: runs the complete verification chain, then appends one
+# line to activity/heartbeat.md with the date, tool count, smoke result and the
+# commit id that was verified. Nothing is fabricated — if the suite fails, the
+# job fails and no record is written.
+
+on:
+  schedule:
+    # Two slots per day, offset per repo via the minute so four repos do not all
+    # hit GitHub's scheduler in the same second.
+    - cron: '11 2 * * *'
+    - cron: '11 14 * * *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Optional note for the record'
+        required: false
+        default: 'manual'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: heartbeat-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  beat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # the default GITHUB_TOKEN is enough to push back to this repo and the
+          # commit lands under the workflow's committer identity set below
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Count tools
+        id: count
+        run: echo "n=$(ls tools/*.js | wc -l)" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke test (every tool loads, plus import reachability)
+        id: smoke
+        run: |
+          set +e
+          node smoke.js --deep > /tmp/smoke.txt 2>&1
+          code=$?
+          set -e
+          tail -15 /tmp/smoke.txt
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "line=$(grep -E '^[0-9]+ tools' /tmp/smoke.txt | tail -1)" >> "$GITHUB_OUTPUT"
+          exit $code
+
+      - name: Assert tool output (logic regressions)
+        id: assert
+        run: |
+          set +e
+          node assertcheck.js > /tmp/assert.txt 2>&1
+          code=$?
+          set -e
+          tail -15 /tmp/assert.txt
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "line=$(grep -E 'case\(s\),' /tmp/assert.txt | tail -1)" >> "$GITHUB_OUTPUT"
+          exit $code
+
+      - name: Refuse to record if the catalogue drifted
+        run: |
+          cp README.md /tmp/README.before
+          node index-tools.js > /dev/null
+          if ! diff -q /tmp/README.before README.md > /dev/null; then
+            echo "::error::README catalogue is stale — regenerate it locally and commit before trusting this record"
+            diff -u /tmp/README.before README.md | head -30
+            exit 1
+          fi
+
+      - name: Write the record
+        id: rec
+        run: |
+          mkdir -p activity
+          day="$(date -u +%Y-%m-%d)"
+          time="$(date -u +%H:%M)"
+          note="${{ github.event.inputs.reason || 'scheduled' }}"
+          file="activity/heartbeat.md"
+
+          if [ ! -f "$file" ]; then
+            {
+              echo '# heartbeat'
+              echo
+              echo 'One line per successful verification run. Written by'
+              echo '`.github/workflows/heartbeat.yml`; a missing day means the run did not'
+              echo 'happen or did not pass, which is the point of keeping this file.'
+              echo
+              echo '| utc | tools | smoke | assertions | verified commit | trigger |'
+              echo '|---|---|---|---|---|---|'
+            } > "$file"
+          fi
+
+          echo "| ${day} ${time} | ${{ steps.count.outputs.n }} | ${{ steps.smoke.outputs.line }} | ${{ steps.assert.outputs.line }} | \`${GITHUB_SHA:0:8}\` | ${note} |" >> "$file"
+          echo "day=$day" >> "$GITHUB_OUTPUT"
+          tail -3 "$file"
+
+      - name: Commit
+        run: |
+          git config user.name  "0xnothings"
+          git config user.email "0xnothings@users.noreply.github.com"
+          git add activity/heartbeat.md
+          if git diff --staged --quiet; then
+            echo "no change staged"
+            exit 0
+          fi
+          git commit -m "chore(heartbeat): $(date -u +%Y-%m-%d) — ${{ steps.count.outputs.n }} tools, suite green"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo '### heartbeat'
+            echo
+            echo "| field | value |"
+            echo "|---|---|"
+            echo "| tools | ${{ steps.count.outputs.n }} |"
+            echo "| smoke | ${{ steps.smoke.outputs.line }} |"
+            echo "| assertions | ${{ steps.assert.outputs.line }} |"
+            echo "| trigger | ${{ github.event_name }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
