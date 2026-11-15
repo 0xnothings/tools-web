@@ -134,7 +134,13 @@ function wrap(text, width) {
 function render(grid, headerRow) {
   if (!grid.length) return '(empty table)';
   const cols = grid[0].length;
-  const widths = Array.from({ length: cols }, (_, i) => Math.max(1, Math.min(maxWidth, ...grid.map((r) => String(r[i] ?? '').length))));
+  // Column width = the WIDEST cell in that column, capped at maxWidth.
+  //
+  // This read Math.min(maxWidth, ...cells), which takes the NARROWEST cell:
+  // a column with cells "a" and "bb" got width 1, then "bb" was hard-wrapped
+  // into "b" / "b" and each half printed on its own row. Math.max is the
+  // intended reduction.
+  const widths = Array.from({ length: cols }, (_, i) => Math.max(1, Math.min(maxWidth, Math.max(...grid.map((r) => String(r[i] ?? '').length)))));
   const body = grid.map((r) => r.map((c, i) => wrap(String(c ?? ''), widths[i])));
   const height = Math.max(...body.map((r) => Math.max(...r.map((c) => c.length))));
   const top = '┌' + widths.map((w) => '─'.repeat(w + 2)).join('┬') + '┐';

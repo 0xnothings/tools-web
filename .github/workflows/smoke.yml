@@ -33,6 +33,9 @@ jobs:
       - name: Smoke test every tool
         run: node smoke.js --deep
 
+      - name: Assert tool output (logic regressions)
+        run: node assertcheck.js
+
       - name: Verify the README catalogue is up to date
         run: |
           cp README.md /tmp/README.before

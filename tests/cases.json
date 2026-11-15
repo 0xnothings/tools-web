@@ -1,0 +1,296 @@
+{
+  "note": "Per-tool output assertions. `node assertcheck.js --update` records a golden, `node assertcheck.js` verifies. Fixtures are UTF-8; fixtures_b64 carries raw bytes.",
+  "cases": [
+    {
+      "tool": "httpstatus.js",
+      "args": [
+        "429"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "429 Too Many Requests",
+          "client-error"
+        ]
+      }
+    },
+    {
+      "tool": "httpstatus.js",
+      "args": [
+        "301"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "301"
+        ],
+        "stdout_regex": [
+          "redirection|redirect"
+        ]
+      }
+    },
+    {
+      "tool": "httpstatus.js",
+      "args": [
+        "200"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "200"
+        ]
+      }
+    },
+    {
+      "tool": "uacheck.js",
+      "args": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Chrome",
+          "Windows"
+        ]
+      }
+    },
+    {
+      "tool": "uacheck.js",
+      "args": [
+        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "bot"
+        ]
+      }
+    },
+    {
+      "tool": "urlx.js",
+      "args": [
+        "https://x.com/a?utm_source=fb&id=3&fbclid=zz",
+        "--strip-tracking"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "cleaned: https://x.com/a?id=3"
+        ]
+      }
+    },
+    {
+      "tool": "urlx.js",
+      "args": [
+        "https://x.com/a?utm_source=fb&id=3"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "tracking"
+        ],
+        "stdout_regex": [
+          "utm_source"
+        ]
+      }
+    },
+    {
+      "tool": "mimeprint.js",
+      "args": [
+        "pdf"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "application/pdf"
+        ]
+      }
+    },
+    {
+      "tool": "mimeprint.js",
+      "args": [
+        "json"
+      ],
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "application/json"
+        ]
+      }
+    },
+    {
+      "tool": "markdownify.js",
+      "args": [
+        "{tmp}/p.html"
+      ],
+      "fixtures": {
+        "p.html": "<html><body><h1>Title</h1><p>Hello <b>world</b></p><ul><li>a</li><li>b</li></ul></body></html>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "# Title"
+        ],
+        "stdout_contains": [
+          "Hello",
+          "world"
+        ]
+      }
+    },
+    {
+      "tool": "tabletext.js",
+      "args": [
+        "{tmp}/t.html"
+      ],
+      "fixtures": {
+        "t.html": "<table><tr><th>a</th><th>bb</th></tr><tr><td>1</td><td>2</td></tr></table>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "│ a │ bb │"
+        ],
+        "stdout_not_contains": [
+          "│ a │ b │"
+        ]
+      },
+      "note": "regression: Math.min over cells gave the narrowest width, so \"bb\" wrapped to \"b\"/\"b\" on two rows"
+    },
+    {
+      "tool": "htmlvalid.js",
+      "args": [
+        "{tmp}/bad.html"
+      ],
+      "fixtures": {
+        "bad.html": "<html><body><div><p>unclosed<img src=x onclick=alert(1)><div id=\"a\"></div><div id=\"a\"></div></body></html>"
+      },
+      "expect": {
+        "exit": 1,
+        "stdout_regex": [
+          "alt|duplicate|onclick|unclosed"
+        ]
+      }
+    },
+    {
+      "tool": "schemagen.js",
+      "args": [
+        "{tmp}/o.json"
+      ],
+      "fixtures": {
+        "o.json": "{\"a\":1,\"b\":\"x\",\"c\":true}\n"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "\\\"type\\\": \\\"object\\\"|object"
+        ]
+      }
+    },
+    {
+      "tool": "mockjson.js",
+      "args": [
+        "{tmp}/o.json"
+      ],
+      "fixtures": {
+        "o.json": "{\"id\":1,\"name\":\"x\",\"ok\":true}\n"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "id"
+        ]
+      }
+    },
+    {
+      "tool": "seohead.js",
+      "args": [
+        "{tmp}/p.html"
+      ],
+      "fixtures": {
+        "p.html": "<html><head><title>Short</title><meta name=\"description\" content=\"d\"><link rel=\"canonical\" href=\"https://e.com/\"></head><body></body></html>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "title|canonical|description"
+        ]
+      }
+    },
+    {
+      "tool": "opengraph.js",
+      "args": [
+        "{tmp}/p.html"
+      ],
+      "fixtures": {
+        "p.html": "<html><head><meta property=\"og:title\" content=\"T\"><meta property=\"og:description\" content=\"D\"></head><body></body></html>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "og:title",
+          "T"
+        ]
+      }
+    },
+    {
+      "tool": "jsonld.js",
+      "args": [
+        "{tmp}/p.html"
+      ],
+      "fixtures": {
+        "p.html": "<html><head><script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"H\"}</script></head><body></body></html>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_contains": [
+          "Article"
+        ]
+      }
+    },
+    {
+      "tool": "sitemapvalidate.js",
+      "args": [
+        "{tmp}/s.xml"
+      ],
+      "fixtures": {
+        "s.xml": "<?xml version=\"1.0\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"><url><loc>https://e.com/</loc><lastmod>2026-01-01</lastmod></url></urlset>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "url|valid|loc"
+        ]
+      }
+    },
+    {
+      "tool": "csspeek.js",
+      "args": [
+        "{tmp}/s.css"
+      ],
+      "fixtures": {
+        "s.css": "a{color:red}\n.x .y .z > p{color:blue}\n#id{color:green}\n@media (max-width:600px){a{color:pink}}\n"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "selector|@media|specificity"
+        ]
+      }
+    },
+    {
+      "tool": "pagestruct.js",
+      "args": [
+        "{tmp}/p.html"
+      ],
+      "fixtures": {
+        "p.html": "<html><body><h1>One</h1><h3>Skip</h3><h1>Two</h1></body></html>"
+      },
+      "expect": {
+        "exit": 0,
+        "stdout_regex": [
+          "h1|heading|skip|multiple"
+        ]
+      }
+    }
+  ]
+}
