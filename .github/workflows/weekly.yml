@@ -29,7 +29,7 @@ jobs:
           node-version: '22'
 
       - name: Smoke test
-        run: node smoke.js
+        run: node smoke.js --deep
 
       - name: Regenerate the catalogue
         run: node index-tools.js
@@ -70,7 +70,7 @@ jobs:
             echo "| tools | ${{ steps.loc.outputs.files }} |"
             echo "| lines of shipped code | ${{ steps.loc.outputs.loc }} |"
             echo "| node | $(node -v) |"
-            echo "| smoke | $(node smoke.js 2>&1 | tail -1) |"
+            echo "| smoke | $(node smoke.js --deep 2>&1 | tail -1) |"
             echo
             echo "Changed in the last 30 days:"
             echo

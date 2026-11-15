@@ -39,7 +39,7 @@ jobs:
         id: smoke
         run: |
           set +e
-          node smoke.js > /tmp/smoke.txt 2>&1
+          node smoke.js --deep > /tmp/smoke.txt 2>&1
           code=$?
           set -e
           tail -20 /tmp/smoke.txt

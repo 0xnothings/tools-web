@@ -30,8 +30,8 @@ jobs:
           fi
           echo "no install step required"
 
-      - name: Smoke test every tool (--help must exit 0)
-        run: node smoke.js
+      - name: Smoke test every tool
+        run: node smoke.js --deep
 
       - name: Verify the README catalogue is up to date
         run: |

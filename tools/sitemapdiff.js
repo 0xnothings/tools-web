@@ -5,7 +5,7 @@
 // @desc Compare two sitemaps and report URLs added, removed, lastmod-changed, priority-changed, plus which new URLs look like they should be polled for indexing first
 // @usage node tools/sitemapdiff.js sitemap-old.xml https://example.com/sitemap.xml
 // @tags web,seo,diff
-import { args, get, num, flag, die, readInput, table } from '../_lib.js';
+import { args, num, flag, die, readInput, table } from '../_lib.js';
 
 const o = args(process.argv.slice(2));
 if (o.f.help) {

@@ -1,5 +1,43 @@
+#!/usr/bin/env node
 // _lib.js — shared zero-dependency helpers for every 0xnothings tool.
 // Copyright (c) 2026 0xnothings
+
+// ---------------------------------------------------------------------------
+// Exit handling.
+//
+// Two problems have to be solved at once on Windows:
+//
+//  1. process.exit() while an undici socket is still closing aborts the runtime
+//     ("Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file
+//     src\win\async.c, line 94") and reports exit 127 even though the work
+//     succeeded and the output was already flushed. Every tool that makes an
+//     HTTP request is affected.
+//
+//  2. Simply setting process.exitCode is safe but does NOT stop execution, so
+//     a tool keeps running after --help or after a fatal error.
+//
+// The fix for both: set exitCode and throw a marked error that an
+// uncaughtException / unhandledRejection handler absorbs. Execution stops
+// synchronously, the event loop drains normally, and the intended exit code
+// survives. Genuine bugs still propagate untouched, because only errors
+// carrying isExitSignal are swallowed.
+// ---------------------------------------------------------------------------
+class ExitSignal extends Error {
+  constructor(code) { super('__exit__'); this.name = 'ExitSignal'; this.isExitSignal = true; this.code = code; }
+}
+
+const absorbExit = (err) => {
+  if (err && err.isExitSignal) { process.exitCode = err.code; return; }
+  throw err;
+};
+process.on('uncaughtException', absorbExit);
+process.on('unhandledRejection', absorbExit);
+
+process.exit = (code = 0) => {
+  process.exitCode = typeof code === 'number' ? code : 0;
+  throw new ExitSignal(process.exitCode);
+};
+
 import { readFileSync } from 'node:fs';
 
 /** Tolerant argv parser: --key value | --key=value | -k value | bare '-' = stdin marker. */
@@ -24,6 +62,7 @@ export const get = (o, k, def) => (o.f[k] === undefined ? def : o.f[k]);
 export const num = (v, def) => { const n = Number(v); return Number.isFinite(n) ? n : def; };
 export const flag = (o, k) => o.f[k] === true || o.f[k] === 'true' || o.f[k] === '1';
 
+/** Print a fatal message and stop the tool with the given exit code. */
 export function die(msg, code = 1) {
   process.stderr.write(String(msg) + '\n');
   process.exit(code);
