@@ -23,11 +23,29 @@
 // carrying isExitSignal are swallowed.
 // ---------------------------------------------------------------------------
 class ExitSignal extends Error {
-  constructor(code) { super('__exit__'); this.name = 'ExitSignal'; this.isExitSignal = true; this.code = code; }
+  constructor(code) {
+    super('__exit__');
+    this.name = 'ExitSignal';
+    this.isExitSignal = true;
+    // Some tools register their own guard that recognises this flag shape
+    // (`__exitSignal`) rather than ours. Without it those guards treat a normal
+    // intended exit as an unexpected crash: they print a stack trace and force
+    // exit code 1, which is exactly what asnmap/jwtforge/massparse were doing.
+    this.__exitSignal = true;
+    this.code = code;
+  }
 }
 
+// Two sentinel shapes must be tolerated, because some tools carry their own
+// local exit sentinel instead of routing through die():
+//   isExitSignal  ours — carries the exit code on the error
+//   __exitSignal  tool-local — sets process.exitCode itself before throwing
+// Without the second case the global handler rethrows and Node prints a stack
+// trace for what is actually a normal, intended exit.
 const absorbExit = (err) => {
-  if (err && err.isExitSignal) { process.exitCode = err.code; return; }
+  if (!err) return;
+  if (err.isExitSignal) { process.exitCode = typeof err.code === 'number' ? err.code : 0; return; }
+  if (err.__exitSignal) return;   // exitCode already set by the tool
   throw err;
 };
 process.on('uncaughtException', absorbExit);
